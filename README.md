@@ -2,16 +2,16 @@
 My could bootcamp capstone project on multi cloud
 
 
-Scenario: A B2B web application deployed in Azure platform has been observing decreased number of leads/enquires being generated on their website. Upon investigating the logs generated in Azure Monitor service, they found that the app servers (backend) are going down for few minutes on a daily basis. Since they are on a tight budget, they are looking for a solution which can help them in retaining the forms filled via the front-end so that even if the backend servers are down the forms data submitted by the end users are not lost. They want to apply this solution part on AWS to retain the high availability of their app.  
+# Scenario
+A B2B web application deployed in Azure platform has been observing decreased number of leads/enquires being generated on their website. Upon investigating the logs generated in Azure Monitor service, they found that the app servers (backend) are going down for few minutes on a daily basis. Since they are on a tight budget, they are looking for a solution which can help them in retaining the forms filled via the front-end so that even if the backend servers are down the forms data submitted by the end users are not lost. They want to apply this solution part on AWS to retain the high availability of their app.  
 
 
-Create an architecture and the step-by-step guide to provide a solution for the above problem statement.
-
-Objective: To set up decoupling of a multi-timer web application deployed on Azure platform using the SQS service offered by AWS
-
+# Objective
+To set up decoupling of a multi-timer web application deployed on Azure platform using the SQS service offered by AWS
 The scenario involves deploying a B2B web application in Azure, where the backend servers frequently go down, leading to a potential loss of form data submitted by end users. The goal is to create an architecture that ensures form data is retained, even when the backend is temporarily down, by using AWS services.
 
-Step 1: Deploy the Frontend and Backend on Azure VMs
+# Step 1
+Deploy the Frontend and Backend on Azure VMs
 Frontend VM:
 
 Create a Virtual Machine (VM) in Azure for hosting the frontend of the web application (which is responsible for displaying the form).
@@ -22,7 +22,9 @@ Backend VM:
 Create another Azure VM for the backend server that processes the form submissions.
 Install Python and any dependencies required for processing the form data.
 The backend will act as a consumer of the messages queued in AWS SQS.
-Step 2: Setup Frontend Script (Producer of a Message)
+
+# Step 2
+Setup Frontend Script (Producer of a Message)
 Python Script for the Frontend:
 
 Write a Python script that collects the form data submitted by users.
@@ -36,10 +38,10 @@ python
 import boto3
 import json
 
-# Initialize SQS client
+-Initialize SQS client
 sqs = boto3.client('sqs', region_name='us-east-1')
 
-# SQS Queue URL
+-SQS Queue URL
 queue_url = 'https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue'
 
 def send_message(form_data):
@@ -49,7 +51,9 @@ def send_message(form_data):
         MessageBody=json.dumps(form_data)
     )
     print(f'Message sent to SQS: {response["MessageId"]}')
-Step 3: Setup Backend Script (Consumer of a Message)
+    
+# Step 3
+Setup Backend Script (Consumer of a Message)
 Python Script for the Backend:
 
 Write a Python script that acts as a consumer, retrieving the form data from AWS SQS.
@@ -62,10 +66,10 @@ python
 import boto3
 import json
 
-# Initialize SQS client
+- Initialize SQS client
 sqs = boto3.client('sqs', region_name='us-east-1')
 
-# SQS Queue URL
+- SQS Queue URL
 queue_url = 'https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue'
 
 def receive_messages():
@@ -88,7 +92,9 @@ def receive_messages():
             ReceiptHandle=message['ReceiptHandle']
         )
         print(f'Message deleted: {message["MessageId"]}')
-Step 4: Set Up Boto3 SDK for Both Frontend and Backend
+        
+# Step 4
+Set Up Boto3 SDK for Both Frontend and Backend
 Install Boto3 SDK:
 
 On both the frontend and backend Azure VMs, install the Boto3 SDK to interact with AWS SQS.
@@ -98,7 +104,9 @@ pip install boto3
 Configure AWS Credentials:
 
 Configure the AWS credentials (Access Key ID and Secret Access Key) on both VMs by using the AWS CLI or manually setting up the credentials in ~/.aws/credentials.
-Step 5: Set Up AWS SQS to Ingest Messages
+
+# Step 5
+Set Up AWS SQS to Ingest Messages
 Create an SQS Queue:
 
 In the AWS Management Console, navigate to the SQS service and create a new standard queue (e.g., "FormSubmissionQueue").
@@ -107,7 +115,9 @@ Take note of the queue URL as it will be used by the frontend and backend script
 Configure SQS Permissions:
 
 Ensure that the frontend and backend VMs have appropriate IAM roles or access keys that allow them to send and receive messages from the SQS queue.
-Step 6: Set Up the Backend Server to Read and Delete Messages from SQS
+
+# Step 6
+Set Up the Backend Server to Read and Delete Messages from SQS
 
 Polling the Queue:
 
