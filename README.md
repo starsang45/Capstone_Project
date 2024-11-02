@@ -1,5 +1,16 @@
 # Capstone_Project_sqs
 My could bootcamp capstone project on multi cloud
+
+
+Scenario: A B2B web application deployed in Azure platform has been observing decreased number of leads/enquires being generated on their website. Upon investigating the logs generated in Azure Monitor service, they found that the app servers (backend) are going down for few minutes on a daily basis. Since they are on a tight budget, they are looking for a solution which can help them in retaining the forms filled via the front-end so that even if the backend servers are down the forms data submitted by the end users are not lost. They want to apply this solution part on AWS to retain the high availability of their app.  
+
+
+Create an architecture and the step-by-step guide to provide a solution for the above problem statement.
+
+Objective: To set up decoupling of a multi-timer web application deployed on Azure platform using the SQS service offered by AWS
+
+The scenario involves deploying a B2B web application in Azure, where the backend servers frequently go down, leading to a potential loss of form data submitted by end users. The goal is to create an architecture that ensures form data is retained, even when the backend is temporarily down, by using AWS services.
+
 Step 1: Deploy the Frontend and Backend on Azure VMs
 Frontend VM:
 
