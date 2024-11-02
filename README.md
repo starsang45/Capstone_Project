@@ -1,4 +1,4 @@
-# Capstone_Project_sqs
+# Capstone_Project_SQS
 My could bootcamp capstone project on multi cloud
 
 
